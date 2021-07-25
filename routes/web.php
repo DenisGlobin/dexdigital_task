@@ -17,4 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WebController::class, 'index']);
 Route::get('/thank-you', [WebController::class, 'success'])->name('success');
 Route::get('/sorry', [WebController::class, 'fail'])->name('fail');
-//Route::post('/create-payment', [WebController::class, 'createPayment']);

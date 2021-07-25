@@ -6,40 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Order extends Model
+class Order
 {
-    use HasFactory;
-
-    protected $attributes = [
-        'status' => 'pending'
-    ];
-//
-//    public static function updateStatusById(string $status, int $id): bool
-//    {
-//        /** @var Order $order */
-//        $order = self::findOrFail($id);
-//        $order->status = $status;
-//
-//        return $order->save();
-//    }
-    public function updateStatus(string $status): bool
+    public static function update(string $status, int $id): bool
     {
-        $this->status = $status;
+        $date = now();
 
-        return $this->save();
+        $affected = DB::table('orders')
+            ->updateOrInsert(
+                ['id' => $id],
+                ['status' => $status, 'created_at' => $date, 'updated_at' => $date]
+            );
+
+        return $affected > 0;
     }
-
-//    public static function update(array $data, int $id): bool
-//    {
-//        $order = DB::table('orders')->find($id);
-//        if (empty($order)) {
-//            throw new \LogicException('Order not found');
-//        }
-//
-//        $affected = DB::table('orders')
-//            ->where('id', $id)
-//            ->update(['status' => $data['status']]);
-//
-//        return $affected > 0;
-//    }
 }

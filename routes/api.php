@@ -15,9 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::patch('/callback', [ApiController::class, 'callback'])->name('api.callback');
-Route::post('/create_payment', [ApiController::class, 'createPayment'])->name('api.create.payment');
