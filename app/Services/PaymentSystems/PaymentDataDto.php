@@ -15,10 +15,10 @@ class PaymentDataDto
     public static function createFromRequest(Request $request): self
     {
         $paymentData = new self();
-        $paymentData->amount = (float) $request->post('amount');
-        $paymentData->currency = (string) $request->post('currency');
+        $paymentData->amount = (float) $request->input('amount');
+        $paymentData->currency = (string) $request->input('currency');
         $paymentData->currency = strtoupper($paymentData->currency);
-        $paymentData->processStatus = (string) $request->post('processStatus');
+        $paymentData->processStatus = (string) $request->input('processStatus');
         $paymentData->processStatus = strtolower($paymentData->processStatus);
 
         return $paymentData;

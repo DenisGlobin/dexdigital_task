@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['pending', 'success', 'fail'])->default('pending');
             $table->timestamps();
         });
     }

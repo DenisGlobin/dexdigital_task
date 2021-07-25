@@ -3,16 +3,20 @@
 
 namespace App\Services\PaymentSystems;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\JsonResponse;
 
 abstract class AbstractPaymentProcessing
 {
-    abstract public function initPayment(PaymentDataDto $dto): JsonResource;
+    protected float $amount;
+    protected string $currency;
+    protected string $processStatus;
+    protected string $orderId;
 
-    abstract public function processPayment(): RedirectResponse;
+    abstract public function initPayment(PaymentDataDto $dto): void;
 
-    public static function getInstance(string $paymentSystemName): self
+    abstract public function sendToPaymentSystemApi(): JsonResponse;
+
+    public static function getPaymentProcessingByName(string $paymentSystemName): self
     {
         return new PaymentProcessingAwesomePay();
     }

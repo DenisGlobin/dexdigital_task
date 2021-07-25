@@ -19,4 +19,5 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::patch('/callback', [ApiController::class, 'callback']);
+Route::patch('/callback', [ApiController::class, 'callback'])->name('api.callback');
+Route::post('/create_payment', [ApiController::class, 'createPayment'])->name('api.create.payment');
