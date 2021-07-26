@@ -6,17 +6,16 @@ namespace App\Services\PaymentProcessing;
 
 use App\Services\CallbackDataDto;
 use App\Services\PaymentStatus\PaymentStatus;
-use App\Services\PaymentStatus\PaymentStatusFail;
+use App\Services\PaymentStatus\PaymentStatusSuccess;
 
-final class PaymentDecline extends PaymentProcessing
+final class PaymentAccept extends PaymentProcessing
 {
-
     /**
      * @param CallbackDataDto $dto
      * @return PaymentStatus
      */
     protected function initNewStatus(CallbackDataDto $dto): PaymentStatus
     {
-        return new PaymentStatusFail($dto);
+        return new PaymentStatusSuccess($dto);
     }
 }

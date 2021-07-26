@@ -4,23 +4,27 @@
 namespace App\Services;
 
 
+use App\Services\PaymentProcessing\PaymentAccept;
 use App\Services\PaymentProcessing\PaymentDecline;
 
 class CallbackManager
 {
-    public static function resolve(array $data): array
+    /**
+     * @param CallbackDataDto $dto
+     * @return array
+     */
+    public static function resolve(CallbackDataDto $dto): array
     {
-        if ($data['transaction']['status'] === null
-            || $data['transaction']['id'] === null) {
+        if (empty($dto->transaction->status) || empty($dto->transaction->id)) {
             throw new \InvalidArgumentException();
         }
 
-        if ($data['transaction']['status'] === StatusEnum::STATUS_FAIL) {
+        if ($dto->transaction->status === StatusEnum::STATUS_FAIL) {
             $processing = new PaymentDecline();
         } else {
-            //
+            $processing = new PaymentAccept();
         }
 
-        return $processing->handle($data);
+        return $processing->handle($dto);
     }
 }

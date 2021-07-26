@@ -8,12 +8,12 @@ use App\Models\Order;
 use App\Services\CallbackDataDto;
 use App\Services\StatusEnum;
 
-class PaymentStatusFail implements PaymentStatus
+class PaymentStatusSuccess implements PaymentStatus
 {
     private CallbackDataDto $data;
 
     /**
-     * PaymentStatusFail constructor.
+     * PaymentStatusSuccess constructor.
      * @param CallbackDataDto $data
      */
     public function __construct(CallbackDataDto $data)
@@ -27,23 +27,15 @@ class PaymentStatusFail implements PaymentStatus
     public function finishPayment(): array
     {
         $orderId = $this->data->transaction->id;
-        $errorCode = $this->data->error->code;
-        $errorMessage = $this->data->error->recommended_message_for_user;
 
         $id = explode('-', $orderId)[0];
         $id = (int) $id;
-        Order::update(StatusEnum::STATUS_FAIL, $id);
-
-        $error = [
-            'code' => $errorCode,
-            'message' => $errorMessage
-        ];
+        Order::update(StatusEnum::STATUS_SUCCESS, $id);
 
         $responseData = [
             'orderId' => $orderId,
-            'status' => StatusEnum::STATUS_FAIL,
-            'redirectUrl' => route('fail'),
-            'error' => $error
+            'status' => StatusEnum::STATUS_SUCCESS,
+            'redirectUrl' => route('success'),
         ];
 
         return $responseData;

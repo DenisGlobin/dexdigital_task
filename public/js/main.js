@@ -16,7 +16,7 @@ let CreatePaymentForm = Vue.component('create-payment-form', {
         <form>
             <div class="mb-3">
                 <label for="amount" class="form-label">Amount</label>
-                <input type="email" class="form-control" id="amount" v-model="amount">
+                <input type="number" class="form-control" id="amount" v-model="amount">
             </div>
             <div class="mb-3">
                 <label for="currency" class="form-label">Currency</label>
@@ -100,7 +100,9 @@ let CreatePaymentForm = Vue.component('create-payment-form', {
             const response = await fetch(API_URL + "callback", requestOptions);
             const callbackResponse = await response.json();
 
-            window.location.href = callbackResponse.redirectUrl;
+            if (!!callbackResponse.redirectUrl) {
+                window.location.href = callbackResponse.redirectUrl;
+            }
         },
     }
 });

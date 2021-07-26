@@ -6,5 +6,5 @@ namespace App\Services\PaymentStatus;
 
 interface PaymentStatus
 {
-    public function finishPayment();
+    public function finishPayment(): array;
 }

@@ -4,15 +4,16 @@
 namespace App\Services\PaymentProcessing;
 
 
+use App\Services\CallbackDataDto;
 use App\Services\PaymentStatus\PaymentStatus;
 
 abstract class PaymentProcessing
 {
-    abstract protected function initNewStatus($data): PaymentStatus;
+    abstract protected function initNewStatus(CallbackDataDto $dto): PaymentStatus;
 
-    public function handle(array $data): array
+    public function handle(CallbackDataDto $dto): array
     {
-        $status = $this->initNewStatus($data);
+        $status = $this->initNewStatus($dto);
 
         return $status->finishPayment();
     }
